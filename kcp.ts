@@ -36,7 +36,7 @@
 // - <somewhere on the invisible internet>
 //   The Rust port was modified to support Genshin Impact by PartyPooper.
 //
-// - <this file>
+// - https://github.com/boba-ps/kcp-ts
 //   The modified Rust port was ported to TypeScript by phosphene47.
 //
 import Denque from "denque";

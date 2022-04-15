@@ -10,6 +10,11 @@ This implementation adds built-in support for that field.
 
 - [denque][1]
 
+## API
+
+API should be mostly self-explanatory if you are familiar with KCP already.
+The entire implementation is contained within a single file [kcp.ts](kcp.ts).
+
 ## License
 
 kcp-ts is licensed under the [MIT License](LICENSE).
