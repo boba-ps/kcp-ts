@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/strictest",
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "target": "ES2016",
+    "moduleResolution": "node"
+  }
+}

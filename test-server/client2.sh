@@ -1,0 +1,1 @@
+RUST_LOG=debug KCP_SRC=127.0.0.1:6801 KCP_DST=127.0.0.1:6800 cargo run
