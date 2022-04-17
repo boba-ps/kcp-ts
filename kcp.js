@@ -130,10 +130,10 @@ function segmentSize(seg) {
 class Kcp {
     constructor(conv, token, output, stream = false) {
         this.conv = conv >>> 0;
+        this.token = token >>> 0;
         this.sndUna = 0;
         this.sndNxt = 0;
         this.rcvNxt = 0;
-        this.token = token >>> 0;
         this.rxRttVal = 0;
         this.rxsRtt = 0;
         this.state = 0;
@@ -166,7 +166,6 @@ class Kcp {
         this.interval = KCP_INTERVAL;
         this.tsFlush = KCP_INTERVAL;
         this.ssThresh = KCP_THRESH_INIT;
-        this.inputConv = false;
         this.output = output;
     }
     /// Check buffer size without actually consuming it
@@ -410,15 +409,7 @@ class Kcp {
             const una = buf.readUInt32LE(20);
             const len = buf.readUInt32LE(24);
             if (conv !== this.conv) {
-                // This allows getting conv from this call, which allows us to allocate
-                // conv from the server side.
-                if (this.inputConv) {
-                    this.conv = conv;
-                    this.inputConv = false;
-                }
-                else {
-                    return -1;
-                }
+                return -1;
             }
             if (token !== this.token) {
                 return -1;

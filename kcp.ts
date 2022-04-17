@@ -164,16 +164,16 @@ type OutputCallback = (buf: Buffer) => void;
 
 export class Kcp {
   /// Conversation ID
-  private conv: u32;
+  readonly conv: u32;
+  /// User token
+  readonly token: u32;
+
   /// Maximun Transmission Unit
   private mtu: usize;
   /// Maximum Segment Size
   private mss: u32;
   /// Connection state
   private state: i32;
-
-  /// User token
-  private token: u32;
 
   /// First unacknowledged packet
   private sndUna: u32;
@@ -246,17 +246,14 @@ export class Kcp {
   /// Enable stream mode
   private stream: boolean;
 
-  /// Get conv from the next input call
-  private inputConv: boolean;
-
   private output: OutputCallback;
 
   constructor(conv: u32, token: u32, output: OutputCallback, stream = false) {
     this.conv = conv >>> 0;
+    this.token = token >>> 0;
     this.sndUna = 0;
     this.sndNxt = 0;
     this.rcvNxt = 0;
-    this.token = token >>> 0;
     this.rxRttVal = 0;
     this.rxsRtt = 0;
     this.state = 0;
@@ -289,7 +286,6 @@ export class Kcp {
     this.interval = KCP_INTERVAL;
     this.tsFlush = KCP_INTERVAL;
     this.ssThresh = KCP_THRESH_INIT;
-    this.inputConv = false;
     this.output = output;
   }
 
@@ -577,14 +573,7 @@ export class Kcp {
       const len = buf.readUInt32LE(24);
 
       if (conv !== this.conv) {
-        // This allows getting conv from this call, which allows us to allocate
-        // conv from the server side.
-        if (this.inputConv) {
-          this.conv = conv;
-          this.inputConv = false;
-        } else {
-          return -1;
-        }
+        return -1;
       }
 
       if (token !== this.token) {
