@@ -4,7 +4,10 @@
     "files": true
   },
   "compilerOptions": {
-    "target": "ES2016",
-    "moduleResolution": "node"
-  }
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strictNullChecks": true
+  },
+  "include": ["kcp.ts"]
 }
