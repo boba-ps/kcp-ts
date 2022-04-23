@@ -334,7 +334,7 @@ export class Kcp {
 
   /// Receive data from buffer
   recv(buf: Buffer, offset = 0) {
-    offset >>>= 0;
+    offset >>> 0;
 
     if (!Buffer.isBuffer(buf) || this.rcvQueue.isEmpty()) {
       return -1;
